@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Denver Post</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
-  <link rel="stylesheet" href="style.css">
-
-</head>
-
-<body class="container">
-  <h3 class="header">Denver Post Scraper</h3>
-  <div id="buttons">
-    <button class="btn" id="article-sort">Sort By Article</button>
-    <button class="btn" id="url-sort">Sort By URL</button>
-  </div>
-  <table id="results">
-    <thead>
-      <tr>
-        <th id="article-name">Article</th>
-        <th id="url-name">URL</th>
-     
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Results from DB here -->
-    </tbody>
-  </table>
-  <script src="app.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8">
+    <title>Scraping With Mongoose</title>
+    <style>
+      body { background-color: #F2F6D0 }
+      #wrapper {
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 5%;
+      }
+      #articles {
+        display: inline-block;
+        overflow: auto;
+        width: 60%;
+        height: 700px;
+      }
+      #notes {
+        float: right;
+        width: 30%;
+      }
+      textarea, input {
+        display: block;
+        width: 100%;
+        background-color: #FCF5C7;
+      }
+      input {
+        height: 36px;
+        font-size: 24px;
+      }
+      textarea {
+        height: 200px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Note Scraper</h1>
+      <h2><i>If you can do this...the homework should be no problem.</i></h2>
+      <div id="articles"></div>
+      <div id="notes"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>

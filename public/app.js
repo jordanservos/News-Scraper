@@ -1,64 +1,72 @@
-//  TODO:
-
-//   1. Make a reusable function for creating a table body in index.html with the results from your MongoDB query
-//   Each row should have info for one animal.
-
-function displayResults(data) {
-
-  $("tbody").empty();
-
-  data.forEach((element) => {
-    $("tbody").append(
-      "<tr><td>" +
-        element.title +
-        "</td>" +
-        "<td>" +
-        element.link +
-        "</td>" +
-       
-        "</tr>"
-       
-    );
-  });
-}
-
-//   2. Make two AJAX functions that fire when users click the two buttons on index.html.
-//       a. When the user clicks the Weight button, the table should display the animal data sorted by weight.
-//       b. When the user clicks the Name button, the table should display the animal data sorted by name.
-
-//   Good luck!
-
-//   *Hint*: We don't want to keep adding to the table with each button click. We only want to show the new results.
-//   What can we do to the table to accomplish this?
-
-//   *Bonus*: Write code to set an 'active' state on the column header. It should make the color sorted-by column red.
-//   *Bonus*: Add additional ways to sort (e.g. by class or number of legs)
-// */
-
-// We'll be rewriting the table's data frequently, so let's make our code more DRY
-// by writing a function that takes in data (JSON) and creates a table body
-
-$("#article-sort").on("click", function () {
-
-
-  $.getJSON("/article", function (data) {
-    // Call our function to generate a table body
-    displayResults(data);
-  });
-
-
+// Grab the articles as a json
+$.getJSON("/articles", function(data) {
+  // For each one
+  for (var i = 0; i < data.length; i++) {
+    // Display the apropos information on the page
+    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+  }
 });
 
-$("#url-sort").on("click", function () {
 
-  $.getJSON("/url", function (data) {
-    // Call our function to generate a table body
-    displayResults(data);
-  });
+// Whenever someone clicks a p tag
+$(document).on("click", "p", function() {
+  // Empty the notes from the note section
+  $("#notes").empty();
+  // Save the id from the p tag
+  var thisId = $(this).attr("data-id");
 
+  // Now make an ajax call for the Article
+  $.ajax({
+    method: "GET",
+    url: "/articles/" + thisId
+  })
+    // With that done, add the note information to the page
+    .then(function(data) {
+      console.log(data);
+      // The title of the article
+      $("#notes").append("<h2>" + data.title + "</h2>");
+      // An input to enter a new title
+      $("#notes").append("<input id='titleinput' name='title' >");
+      // A textarea to add a new note body
+      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      // A button to submit a new note, with the id of the article saved to it
+      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+
+      // If there's a note in the article
+      if (data.note) {
+        // Place the title of the note in the title input
+        $("#titleinput").val(data.note.title);
+        // Place the body of the note in the body textarea
+        $("#bodyinput").val(data.note.body);
+      }
+    });
 });
 
-$.getJSON("/all", function (data) {
-  // Call our function to generate a table body
-  displayResults(data);
+// When you click the savenote button
+$(document).on("click", "#savenote", function() {
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "POST",
+    url: "/articles/" + thisId,
+    data: {
+      // Value taken from title input
+      title: $("#titleinput").val(),
+      // Value taken from note textarea
+      body: $("#bodyinput").val()
+    }
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);
+      // Empty the notes section
+      $("#notes").empty();
+    });
+
+  // Also, remove the values entered in the input and textarea for note entry
+  $("#titleinput").val("");
+  $("#bodyinput").val("");
 });
