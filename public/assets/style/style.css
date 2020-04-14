@@ -1,0 +1,39 @@
+.jumbotron {
+  height: 300px;
+}
+
+p {
+    padding-left: 10px;
+}
+
+#articles {
+  display: inline-block;
+  overflow: auto;
+  width: 60%;
+  height: 700px;
+}
+#notes {
+  float: right;
+  width: 30%;
+}
+textarea, input {
+  display: block;
+  width: 100%;
+  background-color: lightgray;
+}
+input {
+  height: 36px;
+  font-size: 24px;
+}
+textarea {
+  height: 200px;
+  font-size: 18px;
+}
+
+#savenote {
+    margin-top: 10px;
+}
+
+#comment {
+    background-color: lightsalmon;
+}
