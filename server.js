@@ -2,9 +2,7 @@ var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
+
 var axios = require("axios");
 var cheerio = require("cheerio");
 
@@ -26,15 +24,11 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populater";
 
-
-// Connect to the Mongo DB
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
 });
-
-
 
 
 // Routes
@@ -79,7 +73,7 @@ app.get("/scrape", function (req, res) {
 
 // Route for getting all Articles from the db
 app.get("/articles", function (req, res) {
-  // TODO: Finish the route so it grabs all of the articles
+
   db.Article.find({})
     .then(function (dbArticle) {
       res.json(dbArticle);
@@ -103,17 +97,12 @@ app.get("/articles/:id", function (req, res) {
       res.json(err);
     });
 
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
+
 });
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function (req, res) {
-  // TODO
-  // ====
+
   // save the new note that gets posted to the Notes collection
   db.Note.create(req.body)
     // then find an article from the req.params.id
@@ -130,7 +119,7 @@ app.post("/articles/:id", function (req, res) {
     .catch(function (err) {
       res.json(err);
     });
-  // and update it's "note" property with the _id of the new note
+
 });
 
 // Start the server
