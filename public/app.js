@@ -10,7 +10,7 @@ $.getJSON("/articles", function(data) {
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", "button", function() {
+$(document).on("click", "#comment", function() {
 
   // Empty the notes from the note section
   $("#notes").empty();

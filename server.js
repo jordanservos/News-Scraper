@@ -122,6 +122,33 @@ app.post("/articles/:id", function (req, res) {
 
 });
 
+
+// Route for deleting note
+// app.delete("/notes/delete/:note_id/:article_id", function (req, res) {
+
+//   // save the new note that gets posted to the Notes collection
+//   db.Note.findOneAndRemove({"_id": req.params.note_id }, function(err) {
+//     if (err) {
+//       console.log(err);
+//       res.send(err);
+//     }
+//    else {
+//     db.Article.findOneAndUpdate({ "_id": req.params.article_id }, {$pull: {"notes": req.params.note_id}})
+//     // Execute the above query
+//      .exec(function(err) {
+//        // Log any errors
+//        if (err) {
+//          console.log(err);
+//          res.send(err);
+    
+//    }
+
+//   });
+   
+
+// });
+
+
 // Start the server
 app.listen(PORT, function () {
   console.log("App running on port " + PORT + "!");
